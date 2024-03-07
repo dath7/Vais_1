@@ -18,14 +18,15 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool isValidEmail(String emailTyped) {
     // regular expression: example@email.vn (not begin with .): test@vais.vn
-    final emailRegExp =
-        RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    // final emailRegExp =
+    //     RegExp(r"^[a-zA-Z0-9][a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+");
+    final emailRegExp = RegExp(r"^[a-zA-Z0-9]+");
     return emailRegExp.hasMatch(emailTyped);
   }
 
   bool isValidPassword(String passwordTyped) {
     // regular expression: 8 digit +:Test1234
-    final passwordRegExp = RegExp(r'\S{8,}');
+    final passwordRegExp = RegExp(r'\S{7,}');
     return passwordRegExp.hasMatch(passwordTyped);
   }
 
@@ -145,7 +146,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         ElevatedButton(
                           onPressed: () => context
                               .read<AuthenticationBloc>()
-                              .add(LogInRequest()),
+                              .add(LogInRequest(
+                                  email: _emailController.text,
+                                  password: _passwordController.text)),
                           style: ButtonStyle(
                             backgroundColor:
                                 const MaterialStatePropertyAll<Color>(
@@ -157,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           child: const Text(
-                            "Sign in",
+                            "Log in",
                             style: TextStyle(color: Colors.white),
                           ),
                         )

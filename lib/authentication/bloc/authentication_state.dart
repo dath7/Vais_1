@@ -1,20 +1,32 @@
 import 'package:equatable/equatable.dart';
-import 'package:school_app/models/User.dart';
+import 'package:school_app/models/user_model.dart';
 
-enum AuthenticationStatus { initial, success, unauthenticated }
+//enum AuthenticationStatus { initial, success, unauthenticated, fail }
 
-class AuthenticationState extends Equatable {
-  final AuthenticationStatus status;
-  final User user;
-  const AuthenticationState(
-      {this.status = AuthenticationStatus.initial, this.user = User.empty});
+sealed class AuthenticationState extends Equatable {
+  @override
+  List<Object> get props => [];
+}
 
-  AuthenticationState.initial() : this();
-  AuthenticationState.success(User user)
-      : this(status: AuthenticationStatus.success, user: user);
-  AuthenticationState.unauthenticated()
-      : this(status: AuthenticationStatus.unauthenticated);
+class AuthenticationInitial extends AuthenticationState {}
+
+class AuthenticationSuccess extends AuthenticationState {
+  final UserModel userModel;
+  AuthenticationSuccess({required this.userModel});
 
   @override
-  List<Object> get props => [status, user];
+  List<Object> get props => [userModel];
 }
+
+class AuthenticationFail extends AuthenticationState {}
+
+//   const AuthenticationState.initial() : this();
+//   const AuthenticationState.success(UserModel user)
+//       : this(status: AuthenticationStatus.success, user: user);
+//   const AuthenticationState.unauthenticated()
+//       : this(status: AuthenticationStatus.unauthenticated);
+//   const AuthenticationState.fail() : this(status: AuthenticationStatus.fail);
+
+//   @override
+//   List<Object> get props => [status, user];
+// }

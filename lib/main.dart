@@ -4,6 +4,10 @@ import 'package:school_app/authentication/bloc/authentication_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_state.dart';
 import 'package:school_app/authentication/view/login_screen.dart';
 
+void main() {
+  runApp(const App());
+}
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -25,8 +29,9 @@ class BlocNavigate extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        if (state.status == AuthenticationStatus.success) {
-          return Text("a");
+        // print(state);
+        if (state is AuthenticationSuccess) {
+          return const Text("a");
         } else {
           return const LoginScreen();
         }
