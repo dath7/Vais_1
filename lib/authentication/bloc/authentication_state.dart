@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:school_app/models/user_model.dart';
 
-//enum AuthenticationStatus { initial, success, unauthenticated, fail }
+//enum AuthenticationStatus { initial, success, unauthenticated, fail,loading }
 
 sealed class AuthenticationState extends Equatable {
   @override
@@ -10,15 +10,19 @@ sealed class AuthenticationState extends Equatable {
 
 class AuthenticationInitial extends AuthenticationState {}
 
+class AuthenticationLoading extends AuthenticationState {}
+
 class AuthenticationSuccess extends AuthenticationState {
-  final UserModel userModel;
+  final UserModel? userModel;
   AuthenticationSuccess({required this.userModel});
 
   @override
-  List<Object> get props => [userModel];
+  List<Object> get props => [userModel!];
 }
 
 class AuthenticationFail extends AuthenticationState {}
+
+
 
 //   const AuthenticationState.initial() : this();
 //   const AuthenticationState.success(UserModel user)

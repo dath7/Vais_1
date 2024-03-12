@@ -135,7 +135,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               right: size.width * 0.4,
                               bottom: size.height * 0.04),
                           child: TextButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                context
+                                    .read<AuthenticationBloc>()
+                                    .add(CheckAutoLogin());
+                              },
                               child: const Text(
                                 "Forgot password ?",
                                 style: TextStyle(
