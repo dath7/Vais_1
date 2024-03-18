@@ -1,59 +1,110 @@
-// To parse this JSON data, do
-//
-//     final user = userFromJson(jsonString);
-
 import 'dart:convert';
 
-UserModel userFromJson(String str) => UserModel.fromJson(json.decode(str));
-
-String userToJson(UserModel data) => json.encode(data.toJson());
-
 class UserModel {
-  String? name;
   String? username;
-  String? password;
-  String? gender;
-  ContactInfo? contactInfo;
-  List<String>? roles;
+  String? role;
+  String? parentId;
+  String? status;
+  DateTime? createdAt;
+  DateTime? updatedAt;
+  String? id;
+  Parent? parent;
+  UserModel({
+    required this.username,
+    required this.role,
+    required this.parentId,
+    required this.status,
+    required this.createdAt,
+    required this.updatedAt,
+    required this.id,
+    required this.parent,
+  });
+
+  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
+        username: json["username"],
+        role: json["role"],
+        parentId: json["parentId"],
+        status: json["status"],
+        createdAt: DateTime.parse(json["createdAt"]),
+        updatedAt: DateTime.parse(json["updatedAt"]),
+        id: json["id"],
+        parent: Parent.fromJson(json["parent"]),
+      );
+
+  Map<String, dynamic> toJson() => {
+        "username": username,
+        "role": role,
+        "parentId": parentId,
+        "status": status,
+        "createdAt": createdAt!.toIso8601String(),
+        "updatedAt": updatedAt!.toIso8601String(),
+        "id": id,
+        "parent": parent
+      };
+}
+
+class Parent {
   Avatar? avatar;
+  String? name;
+  String? parentCode;
+  String? nationality;
+  String? slug;
+  String? gender;
+  String? address;
+  DateTime? dateOfBirth;
+  String? status;
+  String? email;
+  String? phone;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? id;
 
-  UserModel({
-    required this.name,
-    required this.username,
-    required this.password,
-    required this.gender,
-    required this.contactInfo,
-    required this.roles,
+  Parent({
     required this.avatar,
+    required this.name,
+    required this.parentCode,
+    required this.nationality,
+    required this.slug,
+    required this.gender,
+    required this.address,
+    required this.dateOfBirth,
+    required this.status,
+    required this.email,
+    required this.phone,
     required this.createdAt,
     required this.updatedAt,
     required this.id,
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
-        name: json["name"],
-        username: json["username"],
-        password: json["password"],
-        gender: json["gender"],
-        contactInfo: ContactInfo.fromJson(json["contactInfo"]),
-        roles: List<String>.from(json["roles"].map((x) => x)),
+  factory Parent.fromJson(Map<String, dynamic> json) => Parent(
         avatar: Avatar.fromJson(json["avatar"]),
+        name: json["name"],
+        parentCode: json["parentCode"],
+        nationality: json["nationality"],
+        slug: json["slug"],
+        gender: json["gender"],
+        address: json["address"],
+        dateOfBirth: DateTime.parse(json["dateOfBirth"]),
+        status: json["status"],
+        email: json["email"],
+        phone: json["phone"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "name": name,
-        "username": username,
-        "password": password,
-        "gender": gender,
-        "contactInfo": contactInfo!.toJson(),
-        "roles": List<dynamic>.from(roles!.map((x) => x)),
         "avatar": avatar!.toJson(),
+        "name": name,
+        "parentCode": parentCode,
+        "nationality": nationality,
+        "slug": slug,
+        "gender": gender,
+        "address": address,
+        "dateOfBirth": dateOfBirth!.toIso8601String(),
+        "status": status,
+        "email": email,
+        "phone": phone,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
         "id": id,
@@ -61,9 +112,9 @@ class UserModel {
 }
 
 class Avatar {
-  String key;
-  String bucket;
-  String url;
+  String? key;
+  String? bucket;
+  String? url;
 
   Avatar({
     required this.key,
@@ -81,29 +132,5 @@ class Avatar {
         "key": key,
         "bucket": bucket,
         "url": url,
-      };
-}
-
-class ContactInfo {
-  String email;
-  List<String> phones;
-  List<String> address;
-
-  ContactInfo({
-    required this.email,
-    required this.phones,
-    required this.address,
-  });
-
-  factory ContactInfo.fromJson(Map<String, dynamic> json) => ContactInfo(
-        email: json["email"],
-        phones: List<String>.from(json["phones"].map((x) => x)),
-        address: List<String>.from(json["address"].map((x) => x)),
-      );
-
-  Map<String, dynamic> toJson() => {
-        "email": email,
-        "phones": List<dynamic>.from(phones.map((x) => x)),
-        "address": List<dynamic>.from(address.map((x) => x)),
       };
 }

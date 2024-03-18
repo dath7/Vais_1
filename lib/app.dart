@@ -39,7 +39,7 @@ class _BlocNavigateState extends State<BlocNavigate> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        // print(state);
+        print(state);
         if (state is AuthenticationSuccess) {
           return const Text("a");
         } else if (state is AuthenticationLoading) {

@@ -81,7 +81,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               keyboardType: TextInputType.emailAddress,
                               validator: (value) {
                                 if (!isValidEmail(value!)) {
-                                  return "Enter valid email: example@email.com";
+                                  return "Enter valid name";
                                 }
                                 if (value.isEmpty) {
                                   return "Email can't left empty";

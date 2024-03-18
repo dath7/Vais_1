@@ -20,7 +20,9 @@ class AuthenticationBloc
     try {
       final dataFetched =
           await NetworkRepo.postRequest(event.email, event.password);
+
       final user = UserModel.fromJson(dataFetched["user"]);
+
       SharedPreprerencesRepo.saveInfor(
           dataFetched["tokens"]["access"]["token"]);
       emit(AuthenticationSuccess(userModel: user));
@@ -35,8 +37,9 @@ class AuthenticationBloc
       final loggedIn = await SharedPreprerencesRepo.autoLogin();
       if (loggedIn) {
         final data = await NetworkRepo.getRequest();
-        print(await SharedPreprerencesRepo.getInfo());
+
         print(data);
+
         emit(AuthenticationSuccess(userModel: UserModel.fromJson(data)));
       } else {
         emit(AuthenticationInitial());

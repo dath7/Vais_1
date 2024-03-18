@@ -14,6 +14,7 @@ class SharedPreprerencesRepo {
 
   static Future<bool> autoLogin() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
+
     return prefs.getString('token') != null;
   }
 
