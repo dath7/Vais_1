@@ -41,7 +41,11 @@ class _BlocNavigateState extends State<BlocNavigate> {
       builder: (context, state) {
         print(state);
         if (state is AuthenticationSuccess) {
-          return const Text("a");
+          return ElevatedButton(
+            onPressed: () =>
+                context.read<AuthenticationBloc>().add(LogoutRequest()),
+            child: const Text("Log out"),
+          );
         } else if (state is AuthenticationLoading) {
           // or blocListener
           return const CircularProgressIndicator();

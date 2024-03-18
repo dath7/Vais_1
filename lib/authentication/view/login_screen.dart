@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_event.dart';
+import 'package:school_app/authentication/bloc/authentication_state.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -147,27 +148,39 @@ class _LoginScreenState extends State<LoginScreen> {
                                     decoration: TextDecoration.underline),
                               )),
                         ),
-                        ElevatedButton(
-                          onPressed: () => context
-                              .read<AuthenticationBloc>()
-                              .add(LogInRequest(
-                                  email: _emailController.text,
-                                  password: _passwordController.text)),
-                          style: ButtonStyle(
-                            backgroundColor:
-                                const MaterialStatePropertyAll<Color>(
-                                    Colors.lightBlue),
-                            padding:
-                                MaterialStatePropertyAll<EdgeInsetsGeometry>(
-                              EdgeInsets.symmetric(
-                                  horizontal: size.width * 0.39),
+                        BlocListener<AuthenticationBloc, AuthenticationState>(
+                          listener: (context, state) {
+                            if (state is AuthenticationFail) {
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(
+                                  const SnackBar(
+                                      content: Text('Authentication Failure')),
+                                );
+                            }
+                          },
+                          child: ElevatedButton(
+                            onPressed: () => context
+                                .read<AuthenticationBloc>()
+                                .add(LogInRequest(
+                                    email: _emailController.text,
+                                    password: _passwordController.text)),
+                            style: ButtonStyle(
+                              backgroundColor:
+                                  const MaterialStatePropertyAll<Color>(
+                                      Colors.lightBlue),
+                              padding:
+                                  MaterialStatePropertyAll<EdgeInsetsGeometry>(
+                                EdgeInsets.symmetric(
+                                    horizontal: size.width * 0.39),
+                              ),
+                            ),
+                            child: const Text(
+                              "Log in",
+                              style: TextStyle(color: Colors.white),
                             ),
                           ),
-                          child: const Text(
-                            "Log in",
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        )
+                        ),
                       ],
                     )),
               ],

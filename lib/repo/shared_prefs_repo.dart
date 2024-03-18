@@ -18,7 +18,7 @@ class SharedPreprerencesRepo {
     return prefs.getString('token') != null;
   }
 
-  static void deleteInfor(String id) async {
+  static void deleteInfor() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('token');
   }

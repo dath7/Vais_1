@@ -28,7 +28,7 @@ class UserModel {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
-        parent: Parent.fromJson(json["parent"]),
+        parent: Parent?.fromJson(json["parent"]),
       );
 
   Map<String, dynamic> toJson() => {

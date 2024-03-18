@@ -1,9 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:school_app/models/user_model.dart';
+
 import 'package:school_app/repo/shared_prefs_repo.dart';
 import 'package:school_app/utils/constants/api_const.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class NetworkRepo {
   static const storage = FlutterSecureStorage();
@@ -17,12 +16,13 @@ class NetworkRepo {
   );
   static Future<dynamic> postRequest(String email, String password) async {
     final dio = Dio(options);
+
     try {
       final response = await dio.post(
-        "${baseUrlAuth}login",
+        "$baseUrlAuth/login",
         data: {"username": email, "password": password},
       );
-      //print(response.data);
+
       // await storage.write(
       //     key: 'access_token',
       //     value: response.data["tokens"]["access"]["token"]);
@@ -45,7 +45,7 @@ class NetworkRepo {
           Dio(options.copyWith(headers: {"Authorization": "Bearer $token"}));
 
       final response = await dio.get(
-        "${baseUrlAuth}user-info",
+        "$baseUrlAuth/user-info",
       );
 
       // print(response.data["data"]);

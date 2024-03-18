@@ -8,16 +8,16 @@ sealed class AuthenticationState extends Equatable {
   List<Object> get props => [];
 }
 
-class AuthenticationInitial extends AuthenticationState {}
+class Unauthenticated extends AuthenticationState {}
 
 class AuthenticationLoading extends AuthenticationState {}
 
 class AuthenticationSuccess extends AuthenticationState {
-  final UserModel? userModel;
+  final UserModel userModel;
   AuthenticationSuccess({required this.userModel});
 
   @override
-  List<Object> get props => [userModel!];
+  List<Object> get props => [userModel];
 }
 
 class AuthenticationFail extends AuthenticationState {}
