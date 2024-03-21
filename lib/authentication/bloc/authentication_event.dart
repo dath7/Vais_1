@@ -1,21 +1,15 @@
-import 'package:equatable/equatable.dart';
-import 'package:school_app/authentication/bloc/authentication_state.dart';
-import 'package:school_app/authentication/utils/constants/api_const.dart';
+sealed class AuthenticationEvent {}
 
-class AuthenticationEvent extends Equatable {
-  const AuthenticationEvent();
-
-  @override
-  List<Object> get props => [];
+class LoginRequest extends AuthenticationEvent {
+  final String email;
+  final String password;
+  LoginRequest({required this.email, required this.password});
 }
 
-class LogInRequest extends AuthenticationEvent {
-  final String url = baseUrl + "login";
-  @override
-  List<Object> get props => [url];
-}
+class LogoutRequest extends AuthenticationEvent {}
 
-class LogoutRequest extends AuthenticationEvent {
-  @override
-  List<Object> get props => [];
-}
+class CheckAutoLogin extends AuthenticationEvent {}
+
+class LoadingUser extends AuthenticationEvent {}
+
+class LoginRetry extends AuthenticationEvent {}
