@@ -1,9 +1,9 @@
 sealed class AuthenticationEvent {}
 
-class LogInRequest extends AuthenticationEvent {
+class LoginRequest extends AuthenticationEvent {
   final String email;
   final String password;
-  LogInRequest({required this.email, required this.password});
+  LoginRequest({required this.email, required this.password});
 }
 
 class LogoutRequest extends AuthenticationEvent {}
@@ -11,3 +11,5 @@ class LogoutRequest extends AuthenticationEvent {}
 class CheckAutoLogin extends AuthenticationEvent {}
 
 class LoadingUser extends AuthenticationEvent {}
+
+class LoginRetry extends AuthenticationEvent {}

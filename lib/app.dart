@@ -4,6 +4,7 @@ import 'package:school_app/authentication/bloc/authentication_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_event.dart';
 import 'package:school_app/authentication/bloc/authentication_state.dart';
 import 'package:school_app/authentication/view/login_screen.dart';
+import 'package:school_app/screens/home_screen.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -11,6 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => AuthenticationBloc(),
         child: const BlocNavigate(),
@@ -41,11 +43,7 @@ class _BlocNavigateState extends State<BlocNavigate> {
       builder: (context, state) {
         print(state);
         if (state is AuthenticationSuccess) {
-          return ElevatedButton(
-            onPressed: () =>
-                context.read<AuthenticationBloc>().add(LogoutRequest()),
-            child: const Text("Log out"),
-          );
+          return const HomeScreen();
         } else if (state is AuthenticationLoading) {
           // or blocListener
           return const CircularProgressIndicator();

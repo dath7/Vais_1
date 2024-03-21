@@ -3,23 +3,26 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import 'package:school_app/repo/shared_prefs_repo.dart';
 import 'package:school_app/utils/constants/api_const.dart';
+import 'package:school_app/utils/constants/string_const.dart';
 
 class NetworkRepo {
   static const storage = FlutterSecureStorage();
   static BaseOptions options = BaseOptions(
-    baseUrl: baseUrlAuth,
+    baseUrl: BASE_URL,
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 5),
     headers: {},
-    contentType: 'application/json',
+    contentType: CONTENT_TYPE,
     responseType: ResponseType.json,
   );
   static Future<dynamic> postRequest(String email, String password) async {
-    final dio = Dio(options);
+    final dio = Dio(
+      options,
+    );
 
     try {
       final response = await dio.post(
-        "$baseUrlAuth/login",
+        "$BASE_URL/login",
         data: {"username": email, "password": password},
       );
 
@@ -30,10 +33,17 @@ class NetworkRepo {
       //     key: 'refresh_token',
       //     value: response.data["tokens"]["refresh"]["token"]);
       // return UserModel.fromJson(response.data["data"]["user"]);
+
       return response.data["data"];
-    } catch (e) {
-      //return UserModel.fromJson({});
-      return "";
+    }
+    // } on DioException catch (e) {
+    //   // return e.response!.data["message"];
+    //   return "message";
+    // }
+    catch (e) {
+      if (e is DioException) {
+        return ErrorMessage.convert(e.type);
+      }
     }
   }
 
@@ -42,10 +52,10 @@ class NetworkRepo {
       final token = await SharedPreprerencesRepo.getInfo();
 
       var dio =
-          Dio(options.copyWith(headers: {"Authorization": "Bearer $token"}));
+          Dio(options.copyWith(headers: {AUTHORIZATION: "Bearer $token"}));
 
       final response = await dio.get(
-        "$baseUrlAuth/user-info",
+        "$BASE_URL/user-info",
       );
 
       // print(response.data["data"]);
@@ -72,6 +82,29 @@ class NetworkRepo {
     } catch (e) {
       //return UserModel.fromJson({});
       return "";
+    }
+  }
+}
+
+class ErrorMessage {
+  static String convert(DioExceptionType errorType) {
+    switch (errorType) {
+      case DioExceptionType.badCertificate:
+        return NetworkErrorMessage.badCertificate;
+      case DioExceptionType.badResponse:
+        return NetworkErrorMessage.badResponse;
+      case DioExceptionType.cancel:
+        return NetworkErrorMessage.cancel;
+      case DioExceptionType.connectionError:
+        return NetworkErrorMessage.connectionError;
+      case DioExceptionType.connectionTimeout:
+        return NetworkErrorMessage.connectionError;
+      case DioExceptionType.receiveTimeout:
+        return NetworkErrorMessage.recevingTimeout;
+      case DioExceptionType.sendTimeout:
+        return NetworkErrorMessage.sendUrlTimeout;
+      case DioExceptionType.unknown:
+        return NetworkErrorMessage.unknown;
     }
   }
 }

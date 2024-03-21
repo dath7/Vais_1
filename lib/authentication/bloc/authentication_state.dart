@@ -20,7 +20,12 @@ class AuthenticationSuccess extends AuthenticationState {
   List<Object> get props => [userModel];
 }
 
-class AuthenticationFail extends AuthenticationState {}
+class AuthenticationFail extends AuthenticationState {
+  final String message;
+  AuthenticationFail({this.message = "Error"});
+  @override
+  List<Object> get props => [];
+}
 
 
 

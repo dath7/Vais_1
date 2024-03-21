@@ -1,4 +1,6 @@
-import 'dart:convert';
+// To parse this JSON data, do
+//
+//     final userModel = userModelFromJson(jsonString);
 
 class UserModel {
   String? username;
@@ -8,7 +10,8 @@ class UserModel {
   DateTime? createdAt;
   DateTime? updatedAt;
   String? id;
-  Parent? parent;
+  Parents? parents;
+
   UserModel({
     required this.username,
     required this.role,
@@ -17,7 +20,7 @@ class UserModel {
     required this.createdAt,
     required this.updatedAt,
     required this.id,
-    required this.parent,
+    required this.parents,
   });
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
@@ -28,7 +31,7 @@ class UserModel {
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
-        parent: Parent?.fromJson(json["parent"]),
+        parents: Parents.fromJson(json["parent"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,98 +42,142 @@ class UserModel {
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
         "id": id,
-        "parent": parent
+        "parent": parents!.toJson(),
       };
 }
 
-class Parent {
-  Avatar? avatar;
-  String? name;
+class Parents {
+  Parent? mother;
+  Parent? father;
+  Guardian? guardian;
   String? parentCode;
-  String? nationality;
-  String? slug;
-  String? gender;
+  String? permanentResidence;
   String? address;
-  DateTime? dateOfBirth;
   String? status;
-  String? email;
-  String? phone;
   DateTime? createdAt;
   DateTime? updatedAt;
   String? id;
 
-  Parent({
-    required this.avatar,
-    required this.name,
+  Parents({
+    required this.mother,
+    required this.father,
+    required this.guardian,
     required this.parentCode,
-    required this.nationality,
-    required this.slug,
-    required this.gender,
+    required this.permanentResidence,
     required this.address,
-    required this.dateOfBirth,
     required this.status,
-    required this.email,
-    required this.phone,
     required this.createdAt,
     required this.updatedAt,
     required this.id,
   });
 
-  factory Parent.fromJson(Map<String, dynamic> json) => Parent(
-        avatar: Avatar.fromJson(json["avatar"]),
-        name: json["name"],
+  factory Parents.fromJson(Map<String, dynamic> json) => Parents(
+        mother: Parent.fromJson(json["mother"]),
+        father: Parent.fromJson(json["father"]),
+        guardian: Guardian.fromJson(json["guardian"]),
         parentCode: json["parentCode"],
-        nationality: json["nationality"],
-        slug: json["slug"],
-        gender: json["gender"],
+        permanentResidence: json["permanentResidence"],
         address: json["address"],
-        dateOfBirth: DateTime.parse(json["dateOfBirth"]),
         status: json["status"],
-        email: json["email"],
-        phone: json["phone"],
         createdAt: DateTime.parse(json["createdAt"]),
         updatedAt: DateTime.parse(json["updatedAt"]),
         id: json["id"],
       );
 
   Map<String, dynamic> toJson() => {
-        "avatar": avatar!.toJson(),
-        "name": name,
+        "mother": mother!.toJson(),
+        "father": father!.toJson(),
+        "guardian": guardian!.toJson(),
         "parentCode": parentCode,
-        "nationality": nationality,
-        "slug": slug,
-        "gender": gender,
+        "permanentResidence": permanentResidence,
         "address": address,
-        "dateOfBirth": dateOfBirth!.toIso8601String(),
         "status": status,
-        "email": email,
-        "phone": phone,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
         "id": id,
       };
 }
 
-class Avatar {
-  String? key;
-  String? bucket;
-  String? url;
+class Parent {
+  String? name;
+  DateTime? dateOfBirth;
+  String? nationality;
+  String? passport;
+  String? occupation;
+  String? email;
+  String? phone;
+  String? officePhone;
 
-  Avatar({
-    required this.key,
-    required this.bucket,
-    required this.url,
+  Parent({
+    required this.name,
+    required this.dateOfBirth,
+    required this.nationality,
+    required this.passport,
+    required this.occupation,
+    required this.email,
+    required this.phone,
+    required this.officePhone,
   });
 
-  factory Avatar.fromJson(Map<String, dynamic> json) => Avatar(
-        key: json["key"],
-        bucket: json["bucket"],
-        url: json["url"],
+  factory Parent.fromJson(Map<String, dynamic> json) => Parent(
+        name: json["name"],
+        dateOfBirth: DateTime.parse(json["dateOfBirth"]),
+        nationality: json["nationality"],
+        passport: json["passport"],
+        occupation: json["occupation"],
+        email: json["email"],
+        phone: json["phone"],
+        officePhone: json["officePhone"],
       );
 
   Map<String, dynamic> toJson() => {
-        "key": key,
-        "bucket": bucket,
-        "url": url,
+        "name": name,
+        "dateOfBirth": dateOfBirth!.toIso8601String(),
+        "nationality": nationality,
+        "passport": passport,
+        "occupation": occupation,
+        "email": email,
+        "phone": phone,
+        "officePhone": officePhone,
+      };
+}
+
+class Guardian {
+  String? name;
+  String? gender;
+  String? passport;
+  String? email;
+  String? phone;
+  String? address;
+  String? relationship;
+
+  Guardian({
+    required this.name,
+    required this.gender,
+    required this.passport,
+    required this.email,
+    required this.phone,
+    required this.address,
+    required this.relationship,
+  });
+
+  factory Guardian.fromJson(Map<String, dynamic> json) => Guardian(
+        name: json["name"],
+        gender: json["gender"],
+        passport: json["passport"],
+        email: json["email"],
+        phone: json["phone"],
+        address: json["address"],
+        relationship: json["relationship"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "name": name,
+        "gender": gender,
+        "passport": passport,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "relationship": relationship,
       };
 }
