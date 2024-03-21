@@ -9,8 +9,8 @@ class NetworkRepo {
   static const storage = FlutterSecureStorage();
   static BaseOptions options = BaseOptions(
     baseUrl: BASE_URL,
-    connectTimeout: const Duration(seconds: 5),
-    receiveTimeout: const Duration(seconds: 5),
+    connectTimeout: const Duration(seconds: 10),
+    receiveTimeout: const Duration(seconds: 10),
     headers: {},
     contentType: CONTENT_TYPE,
     responseType: ResponseType.json,
@@ -21,11 +21,13 @@ class NetworkRepo {
     );
 
     try {
+      //  print("a");
+
       final response = await dio.post(
         "$BASE_URL/login",
         data: {"username": email, "password": password},
       );
-
+      //print(response.data);
       // await storage.write(
       //     key: 'access_token',
       //     value: response.data["tokens"]["access"]["token"]);

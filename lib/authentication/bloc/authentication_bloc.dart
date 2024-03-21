@@ -1,7 +1,4 @@
-import 'dart:math';
-
 import 'package:bloc/bloc.dart';
-import 'package:dio/dio.dart';
 
 import 'package:school_app/authentication/bloc/authentication_event.dart';
 import 'package:school_app/authentication/bloc/authentication_state.dart';
@@ -24,13 +21,14 @@ class AuthenticationBloc
     try {
       final loginInfo =
           await NetworkRepo.postRequest(event.email, event.password);
+
       //print(loginInfo["user"]);
       // print(UserModel.fromJson(loginInfo["user"]).toString());
       //final user = UserModel.fromJson(dataFetched["user"]);
       //print(loginInfo);
       SharedPreprerencesRepo.saveInfor(loginInfo["tokens"]["access"]["token"]);
       final dataUser = await NetworkRepo.getRequest();
-      print(dataUser);
+      //print(dataUser);
       emit(AuthenticationSuccess(userModel: UserModel.fromJson(dataUser)));
     } catch (e) {
       //print(e.runtimeType);

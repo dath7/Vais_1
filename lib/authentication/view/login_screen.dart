@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_bloc.dart';
@@ -18,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _passwordController = TextEditingController();
   bool _obscureText = true;
   final _formKey = GlobalKey<FormState>();
-  bool isValid = false;
+  final ValueNotifier<bool> isValid = ValueNotifier(false);
   bool isValidEmail(String emailTyped) {
     // regular expression: example@email.vn (not begin with .): test@vais.vn
     // final emailRegExp =
@@ -95,10 +95,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 right: size.width * 0.05,
                               ),
                               child: TextFormField(
+                                  inputFormatters: [
+                                    FilteringTextInputFormatter.deny(
+                                      RegExp(r'\s'),
+                                    )
+                                  ],
                                   onChanged: (value) {
-                                    isValid = isValidEmail(value) &&
-                                        isValidPassword(
-                                            _passwordController.text);
+                                    //isValid.value = isValidInput();
+                                    isValid.value =
+                                        _formKey.currentState!.validate();
                                   },
                                   onTapOutside: (event) =>
                                       FocusManager().primaryFocus?.unfocus(),
@@ -111,10 +116,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                       border: const UnderlineInputBorder(),
                                       hintText: "Enter your email",
                                       suffixIcon: IconButton(
-                                        icon: const Icon(Icons.clear),
-                                        onPressed: () =>
-                                            _emailController.clear(),
-                                      )),
+                                          icon: const Icon(Icons.clear),
+                                          onPressed: () => {
+                                                _emailController.clear(),
+                                                isValid.value = false,
+                                              })),
                                   keyboardType: TextInputType.name,
                                   validator: (value) {
                                     if (!isValidEmail(value!)) {
@@ -135,10 +141,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                 right: size.width * 0.05,
                               ),
                               child: TextFormField(
+                                inputFormatters: [
+                                  FilteringTextInputFormatter.deny(
+                                    RegExp(r'\s'),
+                                  )
+                                ],
                                 onChanged: (value) {
-                                  isValid =
-                                      isValidEmail(_emailController.text) &&
-                                          isValidPassword(value);
+                                  isValid.value =
+                                      _formKey.currentState!.validate();
+                                  // isValid.value = isValidInput();
                                 },
                                 controller: _passwordController,
                                 obscureText: _obscureText,
@@ -187,22 +198,22 @@ class _LoginScreenState extends State<LoginScreen> {
                                   )),
                             ),
                             ValueListenableBuilder(
-                              valueListenable: ValueNotifier<bool>(isValid),
+                              valueListenable: isValid,
                               builder: (context, isValid, child) {
                                 return ElevatedButton(
                                   onPressed: !isValid
                                       ? null
                                       : () => {
-                                            FocusManager.instance.primaryFocus
-                                                ?.unfocus(),
+                                            // FocusManager.instance.primaryFocus
+                                            //     ?.unfocus(),
                                             context
                                                 .read<AuthenticationBloc>()
                                                 .add(LoginRequest(
-                                                    email:
-                                                        _emailController.text,
+                                                    email: _emailController.text
+                                                        .trim(),
                                                     password:
-                                                        _passwordController
-                                                            .text))
+                                                        _passwordController.text
+                                                            .trim()))
                                           },
                                   style: ButtonStyle(
                                     backgroundColor: isValid

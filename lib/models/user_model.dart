@@ -37,12 +37,12 @@ class UserModel {
   Map<String, dynamic> toJson() => {
         "username": username,
         "role": role,
-        "parentId": parentId,
-        "status": status,
+        // "parentId": parentId,
+        // "status": status,
         "createdAt": createdAt!.toIso8601String(),
         "updatedAt": updatedAt!.toIso8601String(),
         "id": id,
-        "parent": parents!.toJson(),
+        // "parent": parents!.toJson(),
       };
 }
 
