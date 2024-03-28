@@ -3,8 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_bloc.dart';
 import 'package:school_app/authentication/bloc/authentication_event.dart';
 import 'package:school_app/authentication/bloc/authentication_state.dart';
-import 'package:school_app/authentication/view/login_screen.dart';
-import 'package:school_app/screens/home_screen.dart';
+
+import 'package:school_app/screens/main_screen.dart.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -12,6 +12,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData.light(useMaterial3: true),
       debugShowCheckedModeBanner: false,
       home: BlocProvider(
         create: (context) => AuthenticationBloc(),
@@ -41,15 +42,16 @@ class _BlocNavigateState extends State<BlocNavigate> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthenticationBloc, AuthenticationState>(
       builder: (context, state) {
-        print(state);
-        if (state is AuthenticationSuccess) {
-          return const HomeScreen();
-        } else if (state is AuthenticationLoading) {
-          // or blocListener
-          return const CircularProgressIndicator();
-        } else {
-          return const LoginScreen();
-        }
+        // print(state);
+        // if (state is AuthenticationSuccess) {
+        //   return const HomeScreen();
+        // } else if (state is AuthenticationLoading) {
+        //   // or blocListener
+        //   return const CircularProgressIndicator();
+        // } else {
+        //   return const LoginScreen();
+        // }
+        return const MainScreen();
       },
     );
   }

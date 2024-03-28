@@ -8,3 +8,34 @@ class NetworkErrorMessage {
   static const String badResponse = "Thông tin đăng nhập không chính xác";
   static const String badCertificate = "Chứng chỉ không chính xác";
 }
+
+class HomeCardTitle {
+  static const String imageUrl = "assets/images";
+  static const String avatar = "$imageUrl/avatar.jpg";
+  static const List<String> title = [
+    "Điểm danh",
+    "Lịch học",
+    "Xin nghỉ học",
+    "Tin nhắn",
+    "Đánh giá",
+    "Lời nhắc",
+    "Ngoại khóa",
+    "Sức khỏe",
+    "Thực đơn",
+    "Khảo sát",
+    "Học phí",
+  ];
+  static const List<String> homeCardTitle = [
+    "$imageUrl/check_in.jpg",
+    "$imageUrl/calendar.jpg",
+    "$imageUrl/absences.png",
+    "$imageUrl/message.png",
+    "$imageUrl/teacher_review.jpg",
+    "$imageUrl/noti.jpg",
+    "$imageUrl/play_time.jpg",
+    "$imageUrl/hearth.jpg",
+    "$imageUrl/lunch.jpg",
+    "$imageUrl/review.jpg",
+    "$imageUrl/fee.jpg",
+  ];
+}
